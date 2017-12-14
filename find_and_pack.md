@@ -2,13 +2,13 @@
 ## Find and package the specified files
 ### introduce
 
-The challenges you need to find the `/etc` directory to meet the needs of the file, then the file is packaged and compressed into a `tar.gz` package.
+The challenges you need to find the `/etc` directory to meet the needs of the file, then, package and compress the file into a `tar.gz` package.
 
 
 First, create a folder `/home/shiyanlou/backup`, and all the files that need to be packaged will be copied to this directory.
 
 
-Then, copy all the files larger than 12K to the `/home/shiyanlou/backup` directory in the /etc directory of the lab building, so we need to keep the directory structure. For example, the `/etc/apt/trusted.gpg` file is 14K, and it will be copied to the `/home/shiyanlou/backup/etc/apt/trusted.gpg` path position. Notice that there are many files in the subfolder under the `/etc` directory that are more than 12K and need to be copied.
+Then, copy all the files larger than 12K to the `/home/shiyanlou/backup` directory in the /etc directory of the lab building, and we need to keep the directory structure. For example, the `/etc/apt/trusted.gpg` file is 14K, and it will be copied to the `/home/shiyanlou/backup/etc/apt/trusted.gpg` path position. Notice that there are many files in the subfolder under the `/etc` directory that are more than 12K and need to be copied.
 
 
 After the copy is completed, the `/home/shiyanlou/backup` is packaged and compressed, and the generated packet `backup.tar.gz` is placed under the `/tmp/backup.tar.gz` path.
@@ -25,8 +25,10 @@ Please do not use soft links, such as the need to complete the copy of the file 
 
 
 ### Hint
-- Lookup, copy, pack, compress
-- Knowledge point
+- find, copy, pack, compress
+
+
+### Knowledge point
 - Linux file and directory operation
 - Linux file lookup operation
 - Tar command package

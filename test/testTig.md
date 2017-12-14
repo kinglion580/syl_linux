@@ -1,6 +1,6 @@
 ### cant preview markdown
 
-### can read private respon
+### can read private repository
 
 ### can edit content
 

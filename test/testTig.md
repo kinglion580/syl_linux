@@ -11,3 +11,5 @@
 ### not issue
 
 ### can pull
+
+### can push private repository but cant search file content(working copy can search but cant push)

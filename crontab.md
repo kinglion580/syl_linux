@@ -43,7 +43,7 @@ sudo cron -f &
 
 - ## check whether cron is started
 ```bash
-pa aux|grep cron
+ps aux|grep cron
 or
 pgrep cron
 ```

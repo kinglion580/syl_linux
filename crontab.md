@@ -34,3 +34,31 @@ Tar command incremental backup mode
 > - `tar.gz`
 > - `0 3`
 > - `\%Y\%m\%d\%H\%M\%S`
+
+- ## how to start cron
+```bash
+sudo service rsyslog start
+sudo cron -f &
+```
+
+- ## check whether cron is started
+```bash
+pa aux|grep cron
+or
+pgrep cron
+```
+
+- ## edit
+```
+crontab -e
+```
+
+- ## list
+```
+crontab -l
+```
+
+- ## remove
+```
+crontab -r
+```

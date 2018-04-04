@@ -15,3 +15,11 @@ su - shiyanlou -c 'echo 123456 | /usr/bin/tigervncpasswd -f > ~/.vnc/passwd' ;\s
 su - shiyanlou -c 'touch ~/.vnc/xstartup ; chmod 755 ~/.vnc/xstartup' ; \
 echo '#!/bin/sh \n export XMODIFIERS="@im=SCIM" \n export GTK_IM_MODULE="scim"\n scim -d & \n startxfce4 & \n' > /home/shiyanlou/.vnc/xstartup ; \
 ```
+
+- `init.sh` 文件的权限要有执行权限
+
+- vnc 时，删除 tmp 缓存要用 `rm -rf /tmp/.X*` 而不是 `rm -f` 。不要少了 r 。
+
+- `run` 的时候，末尾不要跟命令，如 bash 等，会覆盖 dockerfile 中 CMD 的命令，导致 init.sh 脚本并未运行。
+
+- 可以使用 `docker create container ...` 创建容器

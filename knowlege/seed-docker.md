@@ -1,3 +1,5 @@
+👉 **`/opt/data/lab-docker-images/shiyanlou/sub_images/seed`**
+
 杀掉 sshd
 ```
 pkill sshd
@@ -23,3 +25,23 @@ echo '#!/bin/sh \n export XMODIFIERS="@im=SCIM" \n export GTK_IM_MODULE="scim"\n
 - `run` 的时候，末尾不要跟命令，如 bash 等，会覆盖 dockerfile 中 CMD 的命令，导致 init.sh 脚本并未运行。
 
 - 可以使用 `docker create container ...` 创建容器
+
+👉 **`/opt/data/lab-docker-images/shiyanlou/sub-images/centos7-desktop`**
+
+- 添加中文
+
+```dockerfile
+# install for chinese
+RUN \
+yum install -y kde-l10n-Chinese.noarch cjkuni-ukai-fonts ;\
+true
+
+COPY ./conf /etc/shiyanlou/conf
+
+RUN \
+# move the config file
+mv /etc/shiyanlou/conf/locale.conf /etc/locale.conf;\
+true
+
+ENV LC_ALL "zh_CN.UTF-8"
+```

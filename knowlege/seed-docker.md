@@ -16,6 +16,8 @@ su - shiyanlou -c 'mkdir ~/.vnc' ; \
 su - shiyanlou -c 'echo 123456 | /usr/bin/tigervncpasswd -f > ~/.vnc/passwd' ;\su - shiyanlou -c 'chmod 600 ~/.vnc/passwd' ; \
 su - shiyanlou -c 'touch ~/.vnc/xstartup ; chmod 755 ~/.vnc/xstartup' ; \
 echo '#!/bin/sh \n export XMODIFIERS="@im=SCIM" \n export GTK_IM_MODULE="scim"\n scim -d & \n startxfce4 & \n' > /home/shiyanlou/.vnc/xstartup ; \
+chmod 600 /home/shiyanlou/.vnc/passwd; \
+chmod 755 /home/shiyanlou/.vnc/xstartup; \ 
 ```
 
 - `init.sh` 文件的权限要有执行权限
@@ -28,7 +30,7 @@ echo '#!/bin/sh \n export XMODIFIERS="@im=SCIM" \n export GTK_IM_MODULE="scim"\n
 
 👉 **`/opt/data/lab-docker-images/shiyanlou/sub-images/centos7-desktop`**
 
-- 添加中文
+- 添加中文 centos
 
 ```dockerfile
 # install for chinese
@@ -44,4 +46,20 @@ mv /etc/shiyanlou/conf/locale.conf /etc/locale.conf;\
 true
 
 ENV LC_ALL "zh_CN.UTF-8"
+```
+
+在 init.sh 中添加了 export 各种语言相关变量的值为中文还是不行。后来发现 vnc 的启动脚本 `~/.vnc/xstartup` 中有一系列 export 语言相关变量的值为英文。这里肯定有问题，需要更改为中文。
+
+另外需要配置 xfce 的语言：`/etc/xdg/xfce4/xinitrc`
+```bash
+# locale
+echo 'export LANG="zh_CN.UTF-8"' >> /etc/xdg/xfce4/xinitrc; \
+echo 'export LANGUAGE="zh_CN"' >> /etc/xdg/xfce4/xinitrc; \
+```
+
+- 时区
+```bash
+# timezone
+cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime; \
+sed -i 's/UTC=yes/UTC=no/' /etc/default/rcS; \
 ```

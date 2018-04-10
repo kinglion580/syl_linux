@@ -30,6 +30,8 @@ chmod 755 /home/shiyanlou/.vnc/xstartup; \
 
 👉 **`/opt/data/lab-docker-images/shiyanlou/sub-images/centos7-desktop`**
 
+使用的阿里云的源。
+
 - 添加中文 centos
 
 ```dockerfile
@@ -48,7 +50,7 @@ true
 ENV LC_ALL "zh_CN.UTF-8"
 ```
 
-在 init.sh 中添加了 export 各种语言相关变量的值为中文还是不行。后来发现 vnc 的启动脚本 `~/.vnc/xstartup` 中有一系列 export 语言相关变量的值为英文。这里肯定有问题，需要更改为中文。
+💡 在 init.sh 中添加了 export 各种语言相关变量的值为中文还是不行。后来发现 vnc 的启动脚本 `~/.vnc/xstartup` 中有一系列 export 语言相关变量的值为英文。这里肯定有问题，需要更改为中文。
 
 另外需要配置 xfce 的语言：`/etc/xdg/xfce4/xinitrc`
 ```bash
@@ -63,3 +65,69 @@ echo 'export LANGUAGE="zh_CN"' >> /etc/xdg/xfce4/xinitrc; \
 cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime; \
 sed -i 's/UTC=yes/UTC=no/' /etc/default/rcS; \
 ```
+
+- 添加中文输入法
+
+可以使用 ibus 或者 fcitx+sogou ，这里使用 ibus 。因为 centos 自带。
+
+**问题：** ibus 没法使用
+
+**解决：** reinstall 安装发现提示 ibus 不可用。说明 ibus 安装有问题。remove 后重新 install 。
+
+```bash
+yum search ibus*
+yum remove -y ibus
+yum install -y ibus
+yum list|grep ibus
+```
+
+其中有关于中文主要的东西是 `ibus-libpinyin` 以及 `ibus-table-chinese-*.noarch` 。
+
+**问题：** 安装了 ibus ，xfce pannel 也就是下面的状态栏没有键盘图标。
+
+**解决：** 使用 `imsettings-switch ibus` 切换或者使用 `ibus-daemon -d -x` 启动。
+
+*参考：* 
+1. https://zhidao.baidu.com/question/1771912838782126380.html
+
+2. https://wiki.archlinux.org/index.php/IBus_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)
+
+**问题：** vnc 启动时没有自动启动 ibus ，要设置自动启动。
+
+**解决：** 设置环境变量 `~/.bashrc` 或者 `~/.profile` 文件。
+
+```bash
+export GTK_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+export QT_IM_MODULE=ibus
+ibus-daemon -d -x
+```
+
+**问题：** ibus 首选项中输入法没有汉语的选项，也就是没有中文输入法。
+
+**解决：** 重装中文输入法：
+
+```bash
+yum install -y ibus-table-chinese*
+yum install -y ibus-libpinyin
+```
+
+- x 安装 `im-chooser` 并且执行 `im-chooser` 选择中文。还是不行
+
+```bash
+yum install -y im-chooser
+```
+*参考：* https://github.com/ibus/ibus/wiki/CentOS
+
+- `ibus list-engine` 可以看到有哪些语言。
+- 验证是否有中文字体。查看本机安装了哪些中文字体 `fc-list :lang=zh` 
+*参考：* https://blog.csdn.net/u012724167/article/details/53510589
+
+- 清除历史命令纪录
+
+```bash
+history -c //清空历史执行命令
+echo > ./.bash_history //或清空用户目录下的这个文件即可
+```
+
+*参考：* https://blog.csdn.net/leadway123/article/details/49155421

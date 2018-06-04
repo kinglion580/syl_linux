@@ -47,6 +47,12 @@ Please do not use soft links, such as the need to complete the copy of the file 
 > - `exec`
 > - `cp --parents`
 
+```bash
+find /etc -type f -size +12k -exec cp --parents {} ~/backup \; 2> /dev/null
+tar czf /tmp/backup.tar.gz backup
+```
+分号后那个空格很重要，没有空就会报错。
+
 # references
 
 - [find,cp,exec-sample](http://blog.csdn.net/longintchar/article/details/51493562)

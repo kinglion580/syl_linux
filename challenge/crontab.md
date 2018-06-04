@@ -35,6 +35,20 @@ Tar command incremental backup mode
 > - `0 3`
 > - `\%Y\%m\%d\%H\%M\%S`
 
+**其他的做法**
+```bash
+#!/bin/bash
+
+cd ~
+mkdir backup
+# find /etc -type f -size +12k -print0 2> /dev/null | xargs -0 -i  cp --parents {} backup 2> /dev/null
+find /etc -type f -size +12k -exec cp --parents {} ~/backup \; 2> /dev/null
+tar czf /tmp/backup.tar.gz backup
+```
+> `-g` 参数是为了实现增量备份，加速备份，它会将一些元信息存放在指定的 backinfo 文件里，下次通过查阅该文件来判断哪些文件是新增要备份的
+> *https://www.gnu.org/software/tar/manual/html_node/Incremental-Dumps.html*
+
+
 - ## how to start cron
 ```bash
 sudo service rsyslog start

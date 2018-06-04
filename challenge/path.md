@@ -6,7 +6,9 @@
 ```bash
 echo xxx >> filename
 
-echo xxx|tee -a filename
+echo DEV_SERVER="https://dev.shiyanlou.com" | sudo tee -a /etc/profile
+
+sudo sed -i '$ a\DEV_SERVER=https://dev.shiyanlou.com' /etc/profile
 
 sudo ex -sc 'a|DEV_SERVER=https://dev.shiyanlou.com' -cx /etc/profile
 #这是使用的 vim 的 ex 模式

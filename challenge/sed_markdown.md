@@ -65,6 +65,12 @@ After execution, the document is turned into:
   /^\n$/D
 }
 ```
+
+另一种解法：
+```
+/./,/^$/!d
+```
+
 - **replace**
 ```
 s/\[picture/\!\[picture/

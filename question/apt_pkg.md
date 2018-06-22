@@ -30,3 +30,9 @@ $ sudo pip3 install Pillow
 ```
 sudo ln -s apt_pkg.cpython-{35m,34m}-x86_64-linux-gnu.so apt_pkg.so
 ```
+
+## 运行 add-apt-repository 报错的问题
+```
+$ sudo python3.4 /usr/bin/add-apt-repository ppa:ansible/ansible
+```
+由于 python 升级之后使用 `add-apt-repository` 会报错（ImportError：No module named 'apt_pkg'），这是因为在 `/usr/lib/python3/dist-packages` 中 `apt_pkg` 的连接只有 `python3.4`，所以为了避免因为版本的问题这里我们就特别的指定 python 的版本信息。
